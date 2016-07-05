@@ -1,0 +1,69 @@
+
+<html>
+<head>
+	<title>Yellow Messenger</title>
+    <meta charset="utf-8">
+    <meta name="title" value="Shopping">
+    <meta name="description" value="Shop everything on chat">
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap2.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    img {
+      height:100px;
+    }
+    a { 
+      color: inherit; 
+    } 
+    </style>
+</head>
+<body>
+
+<div class="container">
+<div class="row"><br><br><br><br><br><br><br><br><br><br><br><br></div>
+  <div class="row">
+    <div class="col-md-5"></div>
+      <img src="images/logo.png">
+  </div>
+  <div class="row">
+    <div class="col-md-4"></div>
+      <img src="images/yellow.jpg">
+  </div>
+  <div class="row">
+    <form method="POST" action="/search">
+      <div class="form-group">
+        <div class="col-md-2"></div>
+         <div class="col-md-7 col-xs-8 col-sm-6">
+            <input type="text" name="search" placeholder="Shop Anything on Chat..." class="form-control">
+          </div>
+            <button class="btn btn-md btn-success">Search</button>
+         </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"> </div>
+      <div class="col-md-8">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group" style="font-weight: lighter; color: burlywood;">
+          <a href="/category/restaurant"> <h3 style="font-size: 20px;">Restaurants</h3> </a>
+        </div>
+        <div class="btn-group" role="group" style="font-weight: lighter; color: burlywood;">
+          <a href="/category/food"> <h3 style="font-size: 20px;">Food</h3> </a>
+        </div>
+        <div class="btn-group" role="group" style="font-weight: lighter; color: burlywood;">
+          <a href="/category/sports"> <h3 style="font-size: 20px;">Sports</h3> </a>
+        </div>
+        <div class="btn-group" role="group" style="font-weight: lighter; color: burlywood;">
+          <a href="/category/movies"> <h3 style="font-size: 20px;">Movies</h3> </a>
+        </div>
+        <div class="btn-group" role="group" style="font-weight: lighter; color: burlywood;">
+          <a href="/shoes"> <h3 style="font-size: 20px;">Shoes</h3> </a>
+        </div>
+    </div>
+      </div>
+  </div>
+</body>
+</html>
+
