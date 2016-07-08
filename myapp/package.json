@@ -1,0 +1,23 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "Github app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yaminik1996/Almabase.git"
+  },
+  "author": "Yamini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yaminik1996/Almabase/issues"
+  },
+  "homepage": "https://github.com/Yaminik1996/Almabase#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
