@@ -2,13 +2,15 @@
 <head>
 
 	<title>Home Page</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 </head>
 <body>
-	Please enter a valid GitHub username for User-Agent header.
+	<div class="row" style="margin-top: 10%; font-size: 20px; color: #9932CC " align="center">
+	Please enter a GitHub username for User-Agent header.
 	<form action="/redis" method="get">
-	<input type="text" name="ua" />
-	<input type="submit" value="Submit">
+	<input type="text" name="ua"  style="width: 50%"/>
+	<input type="submit" class="btn btn-default" value="Submit" style="color: pink">
     </form>
+</div>
 </body>
 </html>

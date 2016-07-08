@@ -4,44 +4,58 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+<link rel="stylesheet" type="text/css"  href="https://fonts.googleapis.com/css?family=Tangerine">
+   <link rel="stylesheet" type="text/css"  href="https://fonts.googleapis.com/css?family=Tillana">
+   <link rel="stylesheet" type="text/css"  href="https://fonts.googleapis.com/css?family=Yatra One">
+   <link rel="stylesheet" type="text/css"  href="https://fonts.googleapis.com/css?family=Vollkorn">
+
+
 	<script type="text/javascript">
 		function send (x) {
       document.getElementById("selrepo").value = x;
 		}
 	</script>
+
+
 </head>
+
+
+
 <body>
 	<nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Logo</a>
+    <div class="nav-wrapper" style="font-family: Tangerine">
+      <a href="#" class="brand-logo" style="font-size: 2.5rem">Top 5 Google repos</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">JavaScript</a></li>
+        <li><a href="/home" style="font-size: 2rem">Home</a></li>
+        <li><a href="/redis" style="font-size: 2rem">Repos</a></li>
+        <li><a href="/exit" style="font-size: 2rem">Exit</a></li>
       </ul>
     </div>
   </nav>
 
+<div class="row" align="center" style="margin-top: 4%; font-size: 18px; color: #A62A2A">
   <form action="/con" method="get">
     Repository name:  
-    <input type="text" name="selrepo" id="selrepo"/>
-    <input type="submit" value="Submit">
+    <input type="text" name="selrepo" id="selrepo" style="width:50%; text-align: center"/>
+    <input type="submit" value="Submit"/>
   </form>
+</div>
 
 	<div class="row" style="margin-left:5%">
 	{{#repos}}
 	    <div class="col s10 m5 l5 xs10">
           <div class="card" style="margin: 2rem 2rem;">
-          	<a href="{{rurl}}"><span class="card-title" style='margin-left:2%; width:100%; text-overflow: ellipsis;font-size: 18px; color: red'>{{name}}</span></a>
+          	<a href="{{rurl}}"><p class="card-title" style='margin-left:2%; width:100%; text-overflow: ellipsis;font-size: 20px; color: red; font-family: Tillana; text-align: center'>{{name}}</p></a>
             <a href="{{rurl}}"><div class="card-image">
               <img src="{{image}}" style="width: 40%; margin-left:auto; margin-right:auto;">
             </div></a>
             <div class="card-content">
-              <p>{{desc}}</p>
-              <p style="color:green; font-size:22px	">{{forks}}&nbsp forks</p>
+              <p style="font-family: Vollkorn; font-size: 16px">{{desc}}</p>
+              <p style="color:green; font-size:22px; font-family: Yatra One	">{{forks}}&nbsp forks</p>
             </div>
             <div class="card-action">
-            	<p><button class="btn btn-default" onclick="send('{{reponame}}')">Select repo</button></p>
+            	<p><button class="btn btn-default" style="font-family: Vollkorn" onclick="send('{{reponame}}')">Select repo</button></p>
             </div>
           </div>
         </div>            
