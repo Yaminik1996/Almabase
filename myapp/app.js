@@ -6,31 +6,45 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 var redis = require('redis');
 var client = redis.createClient();
-var router = express.Router();
+
+//parser for JSON
 
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
+
+//REDIS client to store user-agent turned on
 
 client.on('connect', function() {
-    console.log('connected');
+    console.log('REDIS connected');
 });
 
+
+//end-point for repositories page; also set key-value into REDIS
+
 app.get('/redis', function (req, res) {
+
   console.log("In /redis");
   var ua=req.query.ua;
   console.log(ua);
+  
+  //set user-agent in REDIS client
+
   client.set("useragent", ua, function(error, reply){
     console.log(reply);
   });
 
   var user;
 
+  //get user-agent from REDIS client
+
   client.get("useragent", function(err, reply){
     user=reply;
   });
+
+  //API call to get Google repos sorted in descending order by fork count
 
 request.get({
 	url:"https://api.github.com/search/repositories?q=user:Google&sort=forks&order=desc",
@@ -38,6 +52,7 @@ request.get({
      "User-Agent": user/*Yaminik1996*/,
      "accept": "application/json"
     }},
+
     function (error, response, body) {
       if (!error) {
         if(!body){ 
@@ -47,12 +62,15 @@ request.get({
         else
         {
             console.log("No error; body found");
-            console.log(body);
-            var repos=[];
+    
+            var repos=[]; //array to store 5 repos
+    
             var items=JSON.parse(body).items;
+    
             for(var x in items){
+
               if(x==5)break;
-              // console.log((JSON.parse(body).items[x].name).replace(/-/g, " ").toUpperCase());
+    
               repos[x]={
                         image: items[x].owner.avatar_url, 
                         name: (items[x].name).replace(/-/g, " ").toUpperCase(),
@@ -63,11 +81,14 @@ request.get({
                         forks: items[x].forks
               };
             }
+
+            //render JSON to repos page for printing
             res.render('repo', {repos:repos});
         }
       }
       else
       {
+
         console.log("ERROR OCCURED");
         console.log(error);
         var e="ERROR OCCURED : " + error;
@@ -76,18 +97,21 @@ request.get({
     });
 });
 
-
+//end-point for contributors page
 
 app.get('/con', function (req, res) {
   console.log("Con working");
   console.log(req.query.selrepo);
   var repo=req.query.selrepo;
-  console.log("https://api.github.com/repos/Google/"+repo+"/stats/contributors");
+
+//get user-agent from REDIS client
   
   var user;
   client.get("useragent", function(err, reply){
     user=reply;
   });
+
+  //API call to get statistics of contributors to a selected repo(sorted in ascending order by commit count by default)
 
   request.get({
     url: "https://api.github.com/repos/Google/"+repo+"/stats/contributors",
@@ -102,10 +126,14 @@ app.get('/con', function (req, res) {
         if(!body){console.log("No body found");
         res.send("No body found");}
         else{
+
           var contributors=JSON.parse(body);
-          // console.log(contributors.length);
+          
+          //store length to start from end
           var len=contributors.length-1;
           var count=0;
+
+          //array to store contributors' data
           var newcontributor=[];
          while(count<3){
                   newcontributor[count++]={
@@ -117,6 +145,8 @@ app.get('/con', function (req, res) {
                 }
                 --len;
                 }
+
+                //API call to fetch repository data
 
                 request.get({
                   url: "https://api.github.com/repos/Google/"+repo,
@@ -133,6 +163,8 @@ app.get('/con', function (req, res) {
                       else{
 
                         repo=repo.replace(/-/g, " ").toUpperCase();
+                        
+                        //JSON to be rendered
                         var all={
                             con: newcontributor,
                             repo: repo,
@@ -140,24 +172,33 @@ app.get('/con', function (req, res) {
                             ua: client.get("useragent")
                           };
                         
+                        //render JSON to page and display contributors
                         res.render('contributor', {all:all});
                         console.log("going to contri");   
-                        // console.log(JSON.parse(body).avatar_url);
+                        
                       }
                     }
                     else{
+                      console.log("ERROR OCCURED");
                       console.log(error);
+                      var e="ERROR OCCURED : " + error;
+                      res.send(e);
                     }
               });
 
     }}
 
                 else{
+                  console.log("ERROR OCCURED");
                   console.log(error);
+                  var e="ERROR OCCURED : " + error;
+                  res.send(e);
                 }
     });
 });
 
+
+//end-point to delete REDIS user-agent and go to home page for new user-agent
 app.get('/home', function(req, res){
 
   client.exists("useragent", function(err, reply) {
@@ -172,6 +213,7 @@ app.get('/home', function(req, res){
   res.render('home');
 });
 
+//Delete user-agent and exit
 
 app.get('/exit', function(req, res){
 
@@ -179,9 +221,17 @@ app.get('/exit', function(req, res){
   client.get("useragent", function(err, reply){
     console.log(reply);
   });
+
+  //delete REDIS user-agent
+
+  client.del("useragent", function(err, reply){
+          console.log(reply);
+  });
+
   res.render('exit', {end:end});
 });
 
+//default to home page
 
 app.get('/', function(req, res){
 
