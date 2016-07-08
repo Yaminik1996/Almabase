@@ -6,18 +6,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 	<script type="text/javascript">
 		function send (x) {
-			// body...
-			// console.log(x);
-			$.ajax({
-						type: 'POST',
-						data: JSON.stringify({data: x}),
-				        contentType: 'application/json',
-                        url: 'con',						
-                        success: function(data) {
-                            console.log('success');
-                            // console.log(x);
-                        }
-                    });
+      document.getElementById("selrepo").value = x;
 		}
 	</script>
 </head>
@@ -32,6 +21,13 @@
       </ul>
     </div>
   </nav>
+
+  <form action="/con" method="get">
+    Repository name:  
+    <input type="text" name="selrepo" id="selrepo"/>
+    <input type="submit" value="Submit">
+  </form>
+
 	<div class="row" style="margin-left:5%">
 	{{#repos}}
 	    <div class="col s10 m5 l5 xs10">
@@ -45,7 +41,7 @@
               <p style="color:green; font-size:22px	">{{forks}}&nbsp forks</p>
             </div>
             <div class="card-action">
-            	<p><button class="btn btn-default" onclick="send('{{reponame}}')">Contributors</button></p>
+            	<p><button class="btn btn-default" onclick="send('{{reponame}}')">Select repo</button></p>
             </div>
           </div>
         </div>            

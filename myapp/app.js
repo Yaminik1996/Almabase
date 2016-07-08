@@ -65,17 +65,13 @@ request.get({
     });
 });
 
-// router.post('/con', function (req, res) {
-// res.render('home');
-// });
 
-
-app.all('/con', function (req, res) {
+app.get('/con', function (req, res) {
   console.log("Con working");
-  console.log(req.body.data);
-  console.log("https://api.github.com/repos/Google/"+req.body.data+"/stats/contributors");
+  console.log(req.query.selrepo);
+  console.log("https://api.github.com/repos/Google/"+req.query.selrepo+"/stats/contributors");
   request.get({
-    url: "https://api.github.com/repos/Google/"+req.body.data+"/stats/contributors",
+    url: "https://api.github.com/repos/Google/"+req.query.selrepo+"/stats/contributors",
   headers: {
      "User-Agent": client.get("useragent"),/*Yaminik1996*/
      "accept": "application/json"
@@ -98,15 +94,18 @@ app.all('/con', function (req, res) {
             }
             --len;
           }
-          // console.log(contributors);
-          res.render('home');
+          var all={
+            con: contributors,
+            repo: req.query.selrepo
+          };
+          res.render('contributor', {all:all});
           console.log("going to contri");
         }
       }
     })
 });
 
-app.get('/abc', function(req, res){
+app.get('/', function(req, res){
   res.render('home');
 })
 
